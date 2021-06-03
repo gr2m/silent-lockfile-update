@@ -23,4 +23,4 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           # fail silently
-          git commit -m "build(lockfile): update" && git push || true
+          git commit -m "build(lockfile): update" && git push origin update-lockfile || true
