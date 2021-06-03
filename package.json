@@ -1,0 +1,25 @@
+{
+  "name": "silent-lockfile-update",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Repository to explore methods for silent dependency lock file updates. See https://github.com/gr2m/helpdesk/issues/22",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gr2m/silent-lockfile-update.git"
+  },
+  "keywords": [],
+  "author": "Gregor Martynus (https://twitter.com/gr2m)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gr2m/silent-lockfile-update/issues"
+  },
+  "homepage": "https://github.com/gr2m/silent-lockfile-update#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "octokit": "^1.0.5"
+  }
+}
