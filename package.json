@@ -1,7 +1,6 @@
 {
   "name": "silent-lockfile-update",
   "version": "1.0.0",
-  "type": "module",
   "description": "Repository to explore methods for silent dependency lock file updates. See https://github.com/gr2m/helpdesk/issues/22",
   "main": "index.js",
   "scripts": {
@@ -12,6 +11,7 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
-    "execa": "^5.1.1"
+    "execa": "^5.1.1",
+    "octokit": "^1.0.5"
   }
 }
