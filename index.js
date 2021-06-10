@@ -21,7 +21,7 @@ async function run() {
   const result = await command("git diff --name-only");
 
   if (!/package-lock\.json/.test(result)) {
-    console.log("no changes");
+    console.log("no changes.");
     process.exit(0);
   }
 
@@ -30,6 +30,8 @@ async function run() {
   ]);
 
   await command("git push HEAD origin");
+
+  console.log("done.");
 }
 
 async function command(cmd, extraCmdOptions = []) {
