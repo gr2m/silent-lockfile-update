@@ -12,8 +12,6 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
-    "dotenv": "^10.0.0",
-    "execa": "^5.1.1",
-    "octokit": "^1.0.4"
+    "execa": "^5.1.1"
   }
 }

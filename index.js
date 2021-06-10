@@ -1,4 +1,3 @@
-import { Octokit } from "octokit";
 import execa from "execa";
 
 run();
