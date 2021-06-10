@@ -5,9 +5,9 @@ on:
     types:
       - completed
 jobs:
-  test:
+  handleLockfileUpdate:
     runs-on: ubuntu-latest
-    if: event.action === "check_run" || event.state !== "pending"
+    if: github.event.action === "check_run" || github.event.state !== "pending"
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
