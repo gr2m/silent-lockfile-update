@@ -13,4 +13,5 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: echo do the thing
+      - run: npm ci
+      - run: node handle-lock-file-update.js
