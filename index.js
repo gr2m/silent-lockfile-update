@@ -20,7 +20,7 @@ async function run() {
 
   const result = await command("git diff --name-only");
 
-  if (!/package-lock\.json/.test(result)) {
+  if (!/package-lock\.json/.test(result.all)) {
     console.log("no changes.");
     process.exit(0);
   }
