@@ -29,7 +29,7 @@ async function run() {
     "build(package): lock file update",
   ]);
 
-  await command("git push HEAD origin");
+  await command("git push origin update-lockfile");
 
   console.log("done.");
 }
