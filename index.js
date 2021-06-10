@@ -29,9 +29,9 @@ async function command(cmd) {
 
   console.log("$ %s", cmd);
 
-  const output = await execa(bin, cmdOptions, { all: true }).all;
+  const result = await execa(bin, cmdOptions, { all: true });
 
-  console.log(output);
+  console.log(result.all);
 
-  return process;
+  return result;
 }
