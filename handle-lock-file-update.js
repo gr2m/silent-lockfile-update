@@ -27,18 +27,20 @@ async function run() {
     commitUrl: `https://github.com/${owner}/${repo}/commit/${sha}`,
   });
 
-  if (["EXPECTED", "PENDING"].includes(result.resource.statusCheckRollup)) {
+  if (
+    ["EXPECTED", "PENDING"].includes(result.resource.statusCheckRollup.state)
+  ) {
     console.log("TODO: Status is pending, exiting for now.");
     return;
   }
 
-  if (result.resource.statusCheckRollup === "SUCCESS") {
+  if (result.resource.statusCheckRollup.state === "SUCCESS") {
     console.log("TODO: SUCCESS! merge the branch and delete it");
     return;
   }
 
   console.log(
     "TODO: Status is %s. Create pull request",
-    result.resource.statusCheckRollup
+    result.resource.statusCheckRollup.state
   );
 }
