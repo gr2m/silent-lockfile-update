@@ -20,18 +20,26 @@ async function run() {
 
   const result = await command("git diff --name-only");
 
-  if (!/package-lock.json/.test(result)) {
+  if (!/package-lock\.json/.test(result)) {
     console.log("no changes");
     process.exit(0);
   }
+
+  await command("git commit package-lock.json -m", [
+    "build(package): lock file update",
+  ]);
+
+  await command("git push HEAD origin");
 }
 
-async function command(cmd) {
+async function command(cmd, extraCmdOptions = []) {
   const [bin, ...cmdOptions] = cmd.split(/\s+/);
 
   console.log("$ %s", cmd);
 
-  const result = await execa(bin, cmdOptions, { all: true });
+  const result = await execa(bin, [...cmdOptions, ...extraCmdOptions], {
+    all: true,
+  });
 
   console.log(result.all);
 
