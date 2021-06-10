@@ -10,3 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo ok
+      - uses: octokit/request-action@v2.x
+        with:
+          route: POST /repos/{owner}/{repo}/statuses/{sha}
+          owner: gr2m
+          repo: silent-lockfile-update
+          sha: ${{ github.sha }}
+          state: success
+          description: test status
+          context: status-test
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
