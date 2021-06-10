@@ -1,5 +1,5 @@
-name: Update Lockfile
-"on":
+name: Handle Lockfile update
+on:
   status:
   check_run:
     types:
