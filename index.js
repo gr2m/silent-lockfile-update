@@ -3,10 +3,6 @@ import execa from "execa";
 run();
 
 async function run() {
-  // const octokit = new Octokit({
-  //   auth: process.env.GITHUB_TOKEN,
-  // });
-
   try {
     await command("git checkout update-lockfile");
   } catch (error) {
@@ -21,6 +17,13 @@ async function run() {
 
   await command("rm -rf package-lock.json node_modules");
   await command("npm install");
+
+  const result = await command("git diff --name-only");
+
+  if (!/package-lock.json/.test(result)) {
+    console.log("no changes");
+    process.exit(0);
+  }
 }
 
 async function command(cmd) {
