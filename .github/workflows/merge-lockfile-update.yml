@@ -15,3 +15,5 @@ jobs:
           node-version: 14
       - run: npm ci
       - run: node handle-lock-file-update.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GR2M_PAT }}
