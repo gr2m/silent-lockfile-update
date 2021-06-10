@@ -29,11 +29,11 @@ async function command(cmd) {
 
   console.log("$ %s", cmd);
 
-  const result = await execa(bin, options);
+  const output = await execa(bin, options).all;
 
-  if (result.all) {
-    console.log(result.all);
+  if (output.trim()) {
+    console.log(output);
   }
 
-  return result;
+  return output;
 }
