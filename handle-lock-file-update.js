@@ -1,4 +1,4 @@
-const { readfile } = require("fs").promises;
+const { readFile } = require("fs").promises;
 const { Octokit } = require("octokit");
 
 run();
@@ -15,7 +15,7 @@ const query = `query($commitUrl:URI!) {
 `;
 
 async function run() {
-  const event = JSON.parse(await readfile(process.env.GITHUB_EVENT_PATH));
+  const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH));
 
   const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
