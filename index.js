@@ -25,11 +25,11 @@ async function run() {
 }
 
 async function command(cmd) {
-  const [bin, ...options] = cmd.split(/\s+/);
+  const [bin, ...cmdOptions] = cmd.split(/\s+/);
 
   console.log("$ %s", cmd);
 
-  const process = execa(bin, options);
+  const process = execa(bin, cmdOptions, { all: true });
 
   process.all.pipe(process.stdout);
 
