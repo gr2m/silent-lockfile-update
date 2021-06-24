@@ -115,7 +115,7 @@ async function run() {
   await octokit.request("POST /repos/{owner}/{repo}/pulls", {
     owner,
     repo,
-    head: update - lockfile,
+    head: "update-lockfile",
     base: event.repository.default_branch,
     title: "🚨 An update to package-lock.json caused the CI to fail",
   });
