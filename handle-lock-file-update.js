@@ -5,7 +5,10 @@ const {
   createOrUpdateTextFile,
 } = require("@octokit/plugin-create-or-update-text-file");
 
-run();
+run().catch((error) => {
+  console.log(error);
+  process.exit(1);
+});
 
 const query = `query($commitUrl:URI!) {
   resource(url: $commitUrl) {
