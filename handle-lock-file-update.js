@@ -97,8 +97,26 @@ async function run() {
     return;
   }
 
-  console.log(
-    "TODO: Status is %s. Create pull request",
-    result.resource.statusCheckRollup.state
-  );
+  console.log("Combined status is %s", result.resource.statusCheckRollup.state);
+
+  const {
+    data: [pr],
+  } = await octokit.request("GET /repos/{owner}/{repo}/pulls", {
+    owner,
+    repo,
+    head: "gr2m:update-lockfile",
+  });
+
+  if (pr) {
+    console.log("Pull request already exists: %s", pr.html_url);
+    process.exit();
+  }
+
+  await octokit.request("POST /repos/{owner}/{repo}/pulls", {
+    owner,
+    repo,
+    head: update - lockfile,
+    base: event.repository.default_branch,
+    title: "🚨 An update to package-lock.json caused the CI to fail",
+  });
 }
