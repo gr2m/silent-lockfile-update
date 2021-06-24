@@ -47,7 +47,6 @@ async function run() {
     auth: process.env.GITHUB_TOKEN,
   });
 
-  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
   const sha = event.commit ? event.commit.sha : event.check_run.head_sha;
   const result = await octokit.graphql(query, {
     commitUrl: `https://github.com/${owner}/${repo}/commit/${sha}`,
