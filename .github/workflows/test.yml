@@ -16,7 +16,7 @@ jobs:
           owner: gr2m
           repo: silent-lockfile-update
           sha: ${{ github.sha }}
-          state: success
+          state: failure
           description: test status
           context: status-test
         env:
