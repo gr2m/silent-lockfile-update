@@ -89,7 +89,7 @@ async function run() {
     await octokit.request("DELETE /repos/{owner}/{repo}/git/refs/{ref}", {
       owner,
       repo,
-      ref: `update-lockfile`,
+      ref: `heads/update-lockfile`,
     });
 
     console.log("update-lockfile branch deleted");
