@@ -115,11 +115,16 @@ async function run() {
     process.exit();
   }
 
-  await octokit.request("POST /repos/{owner}/{repo}/pulls", {
-    owner,
-    repo,
-    head: "update-lockfile",
-    base: event.repository.default_branch,
-    title: "🚨 An update to package-lock.json caused the CI to fail",
-  });
+  const { data: newPr } = await octokit.request(
+    "POST /repos/{owner}/{repo}/pulls",
+    {
+      owner,
+      repo,
+      head: "update-lockfile",
+      base: event.repository.default_branch,
+      title: "🚨 An update to package-lock.json caused the CI to fail",
+    }
+  );
+
+  console.log("Pull request created at %s", newPr.html_url);
 }
