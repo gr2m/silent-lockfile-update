@@ -11,6 +11,7 @@
   "author": "Gregor Martynus (https://twitter.com/gr2m)",
   "license": "MIT",
   "dependencies": {
+    "@octokit/plugin-create-or-update-text-file": "^1.0.2",
     "execa": "^5.1.1",
     "octokit": "^1.0.5"
   }

@@ -1,5 +1,9 @@
 const { readFile } = require("fs").promises;
+
 const { Octokit } = require("octokit");
+const {
+  createOrUpdateTextFile,
+} = require("@octokit/plugin-create-or-update-text-file");
 
 run();
 
@@ -14,13 +18,32 @@ const query = `query($commitUrl:URI!) {
 }
 `;
 
+const MyOctokit = Octokit.plugin(createOrUpdateTextFile);
+
 async function run() {
   const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH));
+  const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
-  console.log(`process.env.GITHUB_SHA`);
-  console.log(process.env.GITHUB_SHA);
+  if (process.env.GITHUB_EVENT_NAME === "check_run") {
+    if (event.check_run.check_suite.head_branch !== "update-lockfile") {
+      console.log(
+        "Check run was not created on update-lockfile branch but from %s",
+        check_run.check_suite.head_branch
+      );
+      process.exit();
+    }
+  } else {
+    const branchNames = event.branches.map((branch) => branch.name);
+    if (!branchNames.includes("update-lockfile")) {
+      console.log(
+        "Status was not created on update-lockfile branch, but on %j",
+        branchNames
+      );
+      process.exit();
+    }
+  }
 
-  const octokit = new Octokit({
+  const octokit = new MyOctokit({
     auth: process.env.GITHUB_TOKEN,
   });
 
@@ -38,9 +61,40 @@ async function run() {
   }
 
   if (result.resource.statusCheckRollup.state === "SUCCESS") {
-    console.log("TODO: SUCCESS! merge the branch and delete it");
+    // get current content of `package-lock.json` file from `update-lockfile` branch
+    const { data: content } = await octokit.request(
+      "GET /repos/{owner}/{repo}/contents/{path}",
+      {
+        owner,
+        repo,
+        path: "package-lock.json",
+        ref: "update-lockfile",
+        mediaType: {
+          format: "raw",
+        },
+      }
+    );
 
-    // 1. get `/package-lock.json` from from the
+    // update `package-lock.json` in default branch
+    await octokit.createOrUpdateTextFile({
+      owner,
+      repo,
+      path: "package-lock.json",
+      content,
+      message: "build(deps): lockfile update",
+    });
+
+    console.log("package-lock.json updated in default branch");
+
+    // delete `update-lockfile` branch
+    await octokit.request("DELETE /repos/{owner}/{repo}/git/refs/{ref}", {
+      owner,
+      repo,
+      ref: `update-lockfile`,
+    });
+
+    console.log("update-lockfile branch deleted");
+
     return;
   }
 
