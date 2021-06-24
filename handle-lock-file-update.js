@@ -17,6 +17,9 @@ const query = `query($commitUrl:URI!) {
 async function run() {
   const event = JSON.parse(await readFile(process.env.GITHUB_EVENT_PATH));
 
+  console.log(`process.env.GITHUB_SHA`);
+  console.log(process.env.GITHUB_SHA);
+
   const octokit = new Octokit({
     auth: process.env.GITHUB_TOKEN,
   });
@@ -30,12 +33,14 @@ async function run() {
   if (
     ["EXPECTED", "PENDING"].includes(result.resource.statusCheckRollup.state)
   ) {
-    console.log("TODO: Status is pending, exiting for now.");
+    console.log("Status is pending, exiting.");
     return;
   }
 
   if (result.resource.statusCheckRollup.state === "SUCCESS") {
     console.log("TODO: SUCCESS! merge the branch and delete it");
+
+    // 1. get `/package-lock.json` from from the
     return;
   }
 
