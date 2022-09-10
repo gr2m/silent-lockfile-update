@@ -1,6 +1,6 @@
 name: Handle Lockfile update
-on:
-  status:
+"on":
+  status: null
   check_run:
     types:
       - completed
@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: lts/*
       - run: npm ci
       - run: node handle-lock-file-update.js
         env:
