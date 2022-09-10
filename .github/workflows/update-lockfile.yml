@@ -1,9 +1,7 @@
 name: Update Lockfile
 "on":
-  # every day at 4am pacific time
   schedule:
-    - cron: "0 12 * * *"
-
+    - cron: 0 12 * * *
   workflow_dispatch: {}
 jobs:
   updateLockfile:
@@ -14,15 +12,19 @@ jobs:
           token: ${{ secrets.GR2M_PAT }}
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: lts/*
       - run: git checkout update-lockfile || git checkout -b update-lockfile
       - run: rm -rf package-lock.json node_modules
       - run: npm install
       - run: git status
-      # TODO: check if there is a file change
-      - run: |
+      - run: >
           git config user.name github-actions
+
           git config user.email github-actions@github.com
+
           git add .
+
           # fail silently
-          git commit -m "build(lockfile): update" && git push origin update-lockfile || true
+
+          git commit -m "build(lockfile): update" && git push origin
+          update-lockfile || true
